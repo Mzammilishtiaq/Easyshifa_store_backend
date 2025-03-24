@@ -42,13 +42,12 @@ export const Loginauth = async (req, res) => {
         if (!LoginUser) {
             return res.json({ message: "User is Not Found", success: false })
         }
-        const isMatch = bcrypt.compare(password, LoginUser.password)
+        const isMatch = await bcrypt.compare(password, LoginUser.password)
         if (isMatch) {
-            const createToken = jwt.sign({ email, password }, 'mzammil', { expiresIn: '1d' })
-            return res.json({ message: "Login is successfull", success: true, Token: createToken })
+            const createToken = jwt.sign({ id: LoginUser._id}, 'mzammil', { expiresIn: '1d' })
+            return res.json({ message: "Login is successfull", success: true, token: createToken })
         } else {
-            return res.json({ message: "User is Not Found", success: false })
-
+            return res.json({ message: "Invalid password", success: false })
         }
 
     }

@@ -1,15 +1,16 @@
 import express from "express";
-import { createProduct, deleteProduct, getAllProduct, getSingleProduct, updateProduct,ProductSearch } from '../controllers/ProductControlers.js'
+import { createProduct, deleteProduct, getAllProduct, getSingleProduct, updateProduct, ProductSearch } from '../controllers/ProductControlers.js'
 import upload from "../Middleware/Multer.js";
+import {ClientAuthorizationUser} from '../Middleware/auth.js'
 const ProductRouting = express.Router();
 
-ProductRouting.post('/', createProduct);
-ProductRouting.get('', getAllProduct);
-ProductRouting.get('/:id', getSingleProduct);
-ProductRouting.patch('/:id',updateProduct);
-ProductRouting.put('/:id',updateProduct);
-ProductRouting.delete('/:id', deleteProduct);
-ProductRouting.delete('/search', ProductSearch);
+ProductRouting.post('/', ClientAuthorizationUser, createProduct);
+ProductRouting.get('', ClientAuthorizationUser, getAllProduct);
+ProductRouting.get('/:id', ClientAuthorizationUser, getSingleProduct);
+ProductRouting.patch('/:id', ClientAuthorizationUser, updateProduct);
+ProductRouting.put('/:id', ClientAuthorizationUser, updateProduct);
+ProductRouting.delete('/:id', ClientAuthorizationUser, deleteProduct);
+ProductRouting.delete('/search', ClientAuthorizationUser, ProductSearch);
 
 ProductRouting.post('/upload', upload.single('image'), createProduct)
 ProductRouting.post('/upload', upload.fields([

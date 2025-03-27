@@ -44,7 +44,7 @@ export const Loginauth = async (req, res) => {
         }
         const isMatch = await bcrypt.compare(password, LoginUser.password)
         if (isMatch) {
-            const createToken = jwt.sign({ id: LoginUser._id}, 'mzammil', { expiresIn: '1d' })
+            const createToken = jwt.sign({ id: LoginUser._id }, 'mzammil', { expiresIn: '1d' })
             return res.json({ message: "Login is successfull", success: true, token: createToken })
         } else {
             return res.json({ message: "Invalid password", success: false })
@@ -81,7 +81,7 @@ export const AdminLogin = async (req, res) => {
         }
         const isMatch = bcrypt.compare(password, AdminUser.password)
         if (isMatch) {
-            const createToken = jwt.sign({ email, password }, 'mzammil', { expiresIn: '1d' })
+            const createToken = jwt.sign({ id: AdminUser._id }, 'mzammil', { expiresIn: '1d' })
             return res.json({ message: "Admin Login is successfull", success: true, Token: createToken })
         } else {
             return res.json({ message: "User admin is Not Found", success: false })
